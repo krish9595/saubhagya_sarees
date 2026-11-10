@@ -92,11 +92,11 @@ export default async function HomePage() {
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-102"
             style={{
-              backgroundImage: `url(${heroData?.desktopImage || "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1920&q=85"})`,
+              backgroundImage: `url(${heroData?.desktopImage || "https://images.unsplash.com/photo-1610047614301-13c63f00c032?auto=format&fit=crop&w=1920&q=85"})`,
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-espresso/90 via-espresso/60 to-transparent" />
-            <div className="absolute inset-0 bg-radial-at-c from-transparent via-espresso/30 to-espresso/80" />
+            <div className="absolute inset-0 bg-gradient-to-r from-espresso/95 via-espresso/70 to-espresso/30" />
+            <div className="absolute inset-0 bg-radial-at-c from-transparent via-espresso/40 to-espresso/85" />
           </div>
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
@@ -165,7 +165,7 @@ export default async function HomePage() {
                 className="group relative aspect-4/5 bg-cream/30 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-500 border border-beige/40 flex flex-col justify-end p-5"
               >
                 <Image
-                  src={cat.image || "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600"}
+                  src={cat.image || "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600"}
                   alt={cat.name}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
@@ -402,12 +402,12 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {[
-              "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500",
-              "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500",
-              "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500",
-              "https://images.unsplash.com/photo-1583391733975-08149ebffb5e?w=500",
-              "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500",
-              "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=500",
+              "https://images.unsplash.com/photo-1610047614301-13c63f00c032?w=500&q=80",
+              "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=500&q=80",
+              "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500&q=80",
+              "https://images.unsplash.com/photo-1571908599407-cdb918ed83bf?w=500&q=80",
+              "https://images.unsplash.com/photo-1587271315307-eaebc181c749?w=500&q=80",
+              "https://images.unsplash.com/photo-1622207691293-5cd80466dab3?w=500&q=80",
             ].map((url, idx) => (
               <a
                 key={idx}
@@ -496,11 +496,11 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <div className="lg:col-span-5 relative aspect-16/10 sm:aspect-4/3 bg-cream overflow-hidden border border-beige/50">
+              <div className="lg:col-span-5 relative aspect-16/10 sm:aspect-4/3 bg-cream overflow-hidden border border-beige/50 shadow-inner">
                 <iframe
                   title="Saubhagya Sarees Hisar Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3485.47648352824!2d75.725!3d29.155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDA5JzE4LjAiTiA3NcKwNDMnMzAuMCJF!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
-                  className="w-full h-full border-0 grayscale hover:grayscale-0 transition-all duration-700"
+                  src="https://maps.google.com/maps?q=Wholesale+Cloth+Market+Hisar+Haryana+125001&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full border-0"
                   loading="lazy"
                 />
               </div>

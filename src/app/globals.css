@@ -1,87 +1,101 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --brand-espresso: #352018;
-    --brand-chocolate: #4A2D23;
-    --brand-gold: #B18A4A;
-    --brand-gold-light: #D5BD91;
-    --brand-ivory: #F8F4EC;
-    --brand-cream: #EFE5D6;
-    --brand-beige: #D8C6AD;
-    --brand-charcoal: #26221F;
-    --brand-white: #FFFFFF;
+@theme {
+  --color-espresso: #352018;
+  --color-chocolate: #4A2D23;
+  --color-gold: #B18A4A;
+  --color-champagne: #D5BD91;
+  --color-ivory: #F8F4EC;
+  --color-cream: #EFE5D6;
+  --color-beige: #D8C6AD;
+  --color-charcoal: #26221F;
 
-    --background: var(--brand-ivory);
-    --foreground: var(--brand-charcoal);
-  }
-
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
-  }
-
-  /* Headings typography */
-  h1, h2, h3, h4, .font-serif {
-    font-family: var(--font-cormorant), "Playfair Display", Georgia, serif;
-    letter-spacing: -0.01em;
-  }
-
-  /* Modern Web Guidance: modal dialog overscroll contain rules */
-  dialog:modal {
-    overscroll-behavior: contain;
-  }
-
-  dialog::backdrop {
-    overflow: hidden;
-    overscroll-behavior: contain;
-    background-color: rgba(38, 34, 31, 0.65);
-    backdrop-filter: blur(4px);
-  }
-
-  /* Custom text selection */
-  ::selection {
-    background-color: #B18A4A;
-    color: #FFFFFF;
-  }
+  --font-serif: var(--font-cormorant), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Custom utility colors for direct class usage */
-.bg-espresso { background-color: #352018; }
-.text-espresso { color: #352018; }
-.border-espresso { border-color: #352018; }
+:root {
+  --brand-espresso: #352018;
+  --brand-chocolate: #4A2D23;
+  --brand-gold: #B18A4A;
+  --brand-gold-light: #D5BD91;
+  --brand-ivory: #F8F4EC;
+  --brand-cream: #EFE5D6;
+  --brand-beige: #D8C6AD;
+  --brand-charcoal: #26221F;
+  --brand-white: #FFFFFF;
 
-.bg-chocolate { background-color: #4A2D23; }
-.text-chocolate { color: #4A2D23; }
-.border-chocolate { border-color: #4A2D23; }
+  --background: #F8F4EC;
+  --foreground: #26221F;
+}
 
-.bg-gold { background-color: #B18A4A; }
-.text-gold { color: #B18A4A; }
-.border-gold { border-color: #B18A4A; }
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
 
-.bg-champagne { background-color: #D5BD91; }
-.text-champagne { color: #D5BD91; }
-.border-champagne { border-color: #D5BD91; }
+/* Headings typography */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-cormorant), "Playfair Display", Georgia, serif;
+  letter-spacing: -0.01em;
+}
 
-.bg-ivory { background-color: #F8F4EC; }
-.text-ivory { color: #F8F4EC; }
-.border-ivory { border-color: #F8F4EC; }
+/* Modern Web Guidance: modal dialog overscroll contain rules */
+dialog:modal {
+  overscroll-behavior: contain;
+}
 
-.bg-cream { background-color: #EFE5D6; }
-.text-cream { color: #EFE5D6; }
-.border-cream { border-color: #EFE5D6; }
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(38, 34, 31, 0.65);
+  backdrop-filter: blur(4px);
+}
 
-.bg-beige { background-color: #D8C6AD; }
-.text-beige { color: #D8C6AD; }
-.border-beige { border-color: #D8C6AD; }
+/* Custom text selection */
+::selection {
+  background-color: #B18A4A;
+  color: #FFFFFF;
+}
 
-.bg-charcoal { background-color: #26221F; }
-.text-charcoal { color: #26221F; }
-.border-charcoal { border-color: #26221F; }
+/* Fallback color utility classes */
+.bg-espresso { background-color: #352018 !important; }
+.text-espresso { color: #352018 !important; }
+.border-espresso { border-color: #352018 !important; }
+
+.bg-chocolate { background-color: #4A2D23 !important; }
+.text-chocolate { color: #4A2D23 !important; }
+.border-chocolate { border-color: #4A2D23 !important; }
+
+.bg-gold { background-color: #B18A4A !important; }
+.text-gold { color: #B18A4A !important; }
+.border-gold { border-color: #B18A4A !important; }
+
+.bg-champagne { background-color: #D5BD91 !important; }
+.text-champagne { color: #D5BD91 !important; }
+.border-champagne { border-color: #D5BD91 !important; }
+
+.bg-ivory { background-color: #F8F4EC !important; }
+.text-ivory { color: #F8F4EC !important; }
+.border-ivory { border-color: #F8F4EC !important; }
+
+.bg-cream { background-color: #EFE5D6 !important; }
+.text-cream { color: #EFE5D6 !important; }
+.border-cream { border-color: #EFE5D6 !important; }
+
+.bg-beige { background-color: #D8C6AD !important; }
+.text-beige { color: #D8C6AD !important; }
+.border-beige { border-color: #D8C6AD !important; }
+
+.bg-charcoal { background-color: #26221F !important; }
+.text-charcoal { color: #26221F !important; }
+.border-charcoal { border-color: #26221F !important; }
 
 /* Subtle luxury gold gradient border */
 .gold-gradient-border {

@@ -72,7 +72,7 @@ export default function Header({
         title: "The Royal Silk Legacy",
         subtitle: "Handloom Banarasi Katan & South Silks",
         href: "/shop/sarees",
-        image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80",
+        image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80",
       },
     },
     { label: "Sarees", href: "/shop/sarees" },
