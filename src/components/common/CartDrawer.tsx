@@ -52,7 +52,7 @@ export default function CartDrawer() {
 
       {/* Slide-out drawer sheet */}
       <aside
-        className="relative z-10 w-full max-w-md bg-ivory text-charcoal h-full flex flex-col shadow-2xl border-l border-beige/40 transform transition-transform duration-300 ease-out"
+        className="relative z-10 w-full max-w-md bg-ivory text-charcoal h-full flex flex-col shadow-2xl border-l border-beige/40 gpu-accelerate ease-luxury duration-300 transform transition-transform"
         role="dialog"
         aria-label="Shopping Bag"
         aria-modal="true"

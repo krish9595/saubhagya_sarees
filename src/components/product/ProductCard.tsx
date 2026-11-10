@@ -87,7 +87,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <>
       <div
-        className="group relative flex flex-col bg-white border border-beige/40 shadow-xs hover:shadow-lg transition-all duration-300 overflow-hidden"
+        className="group relative flex flex-col bg-white border border-beige/40 shadow-xs hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 ease-luxury overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -129,12 +129,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             src={isHovered ? hoverImg : primaryImg}
             alt={product.title}
             fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            loading="lazy"
+            className="object-cover transition-transform duration-700 ease-luxury group-hover:scale-105 will-change-transform"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
 
           {/* Quick Actions Hover Overlay on Desktop */}
-          <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-espresso/80 via-espresso/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-between gap-2">
+          <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-espresso/90 via-espresso/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 ease-luxury flex items-center justify-between gap-2">
             <button
               onClick={(e) => {
                 e.preventDefault();

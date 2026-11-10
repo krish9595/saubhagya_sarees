@@ -84,7 +84,7 @@ export default function QuickViewModal({ product, isOpen, onClose }: QuickViewMo
 
       {/* Modal dialog box */}
       <div
-        className="relative z-10 w-full max-w-4xl bg-ivory border border-beige/60 shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] animate-in fade-in zoom-in-95 duration-200"
+        className="relative z-10 w-full max-w-4xl bg-ivory border border-beige/60 shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] animate-scale-in gpu-accelerate"
         role="dialog"
         aria-label={product.title}
         aria-modal="true"

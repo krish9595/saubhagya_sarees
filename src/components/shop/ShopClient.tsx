@@ -330,7 +330,7 @@ export default function ShopClient({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 animate-smooth-in gpu-accelerate">
               {filteredProducts.map((p) => (
                 <ProductCard key={p.id} product={p as any} />
               ))}

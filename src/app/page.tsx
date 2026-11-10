@@ -162,16 +162,17 @@ export default async function HomePage() {
               <Link
                 key={cat.id}
                 href={`/shop/${cat.slug}`}
-                className="group relative aspect-4/5 bg-cream/30 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-500 border border-beige/40 flex flex-col justify-end p-5"
+                className="group relative aspect-4/5 bg-cream/30 overflow-hidden shadow-xs hover:shadow-2xl transition-all duration-500 ease-luxury border border-beige/40 flex flex-col justify-end p-5 hover:-translate-y-1"
               >
                 <Image
                   src={cat.image || "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600"}
                   alt={cat.name}
                   fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                  loading="lazy"
+                  className="object-cover transition-transform duration-700 ease-luxury group-hover:scale-106 will-change-transform"
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/40 to-transparent group-hover:from-espresso transition-colors duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/40 to-transparent group-hover:from-espresso transition-colors duration-500 ease-luxury" />
 
                 <div className="relative z-10 text-ivory">
                   <h3 className="font-serif text-lg sm:text-xl font-normal text-ivory group-hover:text-champagne transition-colors mb-1">
@@ -181,7 +182,7 @@ export default async function HomePage() {
                     {cat.description || "Explore curated ethnic designs"}
                   </p>
                   <span className="text-[10px] uppercase tracking-widest font-semibold text-gold group-hover:text-white flex items-center gap-1">
-                    Explore Collection <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    Explore Collection <ArrowRight className="w-3 h-3 group-hover:translate-x-1.5 transition-transform duration-300 ease-luxury" />
                   </span>
                 </div>
               </Link>
@@ -404,27 +405,28 @@ export default async function HomePage() {
             {[
               "https://images.unsplash.com/photo-1610047614301-13c63f00c032?w=500&q=80",
               "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=500&q=80",
-              "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500&q=80",
-              "https://images.unsplash.com/photo-1571908599407-cdb918ed83bf?w=500&q=80",
-              "https://images.unsplash.com/photo-1587271315307-eaebc181c749?w=500&q=80",
-              "https://images.unsplash.com/photo-1622207691293-5cd80466dab3?w=500&q=80",
+              "https://images.unsplash.com/photo-1604309232579-57b2a96dc946?w=500&q=80",
+              "https://images.unsplash.com/photo-1756483509177-bbabd67a3234?w=500&q=80",
+              "https://images.unsplash.com/photo-1589734750443-06dbd51c0447?w=500&q=80",
+              "https://images.unsplash.com/photo-1708534246051-7f47b279e94b?w=500&q=80",
             ].map((url, idx) => (
               <a
                 key={idx}
                 href="https://www.instagram.com/saubhagya_sarees_31/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative aspect-square bg-cream overflow-hidden shadow-xs hover:shadow-lg transition-all"
+                className="group relative aspect-square bg-cream overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 ease-luxury"
               >
                 <Image
                   src={url}
                   alt={`Saubhagya Instagram post ${idx + 1}`}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                  className="object-cover transition-transform duration-500 ease-luxury group-hover:scale-108 will-change-transform"
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                 />
-                <div className="absolute inset-0 bg-espresso/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                  <InstagramIcon className="w-6 h-6 text-champagne transform group-hover:scale-110 transition-transform" />
+                <div className="absolute inset-0 bg-espresso/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-luxury flex items-center justify-center text-white">
+                  <InstagramIcon className="w-6 h-6 text-champagne transform group-hover:scale-110 transition-transform duration-300 ease-luxury" />
                 </div>
               </a>
             ))}

@@ -176,7 +176,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
               alt={product.title}
               fill
               priority
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="object-cover transition-transform duration-700 ease-luxury group-hover:scale-105 will-change-transform"
               sizes="(max-width: 1024px) 100vw, 55vw"
             />
 
@@ -348,7 +348,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <button
                 onClick={() => handleAddToCart(false)}
-                className="w-full flex items-center justify-center gap-2 bg-chocolate hover:bg-espresso text-ivory text-xs uppercase tracking-widest font-semibold py-4 shadow-md transition-all group"
+                className="w-full flex items-center justify-center gap-2 bg-chocolate hover:bg-espresso text-ivory text-xs uppercase tracking-widest font-semibold py-4 shadow-md active:scale-[0.98] transition-all duration-200 ease-luxury group"
               >
                 {addedNotice ? (
                   <>
@@ -357,7 +357,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
                   </>
                 ) : (
                   <>
-                    <ShoppingBag className="w-4 h-4 text-champagne group-hover:scale-110 transition-transform" />
+                    <ShoppingBag className="w-4 h-4 text-champagne group-hover:scale-110 transition-transform duration-300 ease-luxury" />
                     <span>Add to Bag</span>
                   </>
                 )}
@@ -365,7 +365,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
 
               <button
                 onClick={() => handleAddToCart(true)}
-                className="w-full flex items-center justify-center gap-2 bg-gold hover:bg-champagne text-espresso text-xs uppercase tracking-widest font-semibold py-4 shadow-md transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-gold hover:bg-champagne text-espresso text-xs uppercase tracking-widest font-semibold py-4 shadow-md active:scale-[0.98] transition-all duration-200 ease-luxury"
               >
                 <span>Buy It Now</span>
               </button>

@@ -39,10 +39,17 @@ export default function Header({
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 30);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -184,7 +191,7 @@ export default function Header({
 
                   {/* Mega Menu Dropdown */}
                   {link.megaMenu && activeMegaMenu === link.label && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-[680px] bg-ivory border border-beige/60 shadow-xl p-6 grid grid-cols-2 gap-6 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 w-[680px] bg-ivory border border-beige/60 shadow-2xl p-6 grid grid-cols-2 gap-6 z-50 animate-smooth-in gpu-accelerate">
                       <div>
                         <h4 className="text-[11px] uppercase tracking-widest font-bold text-gold border-b border-beige/40 pb-2 mb-3">
                           Curated Collections

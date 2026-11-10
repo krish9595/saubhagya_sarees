@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function updateMedia() {
-  console.log("💎 Updating Saubhagya Sarees imagery to verified luxury Indian ethnic fashion...");
+  console.log("💎 Updating Saubhagya Sarees imagery to 100% relatable luxury Indian ethnic fashion...");
 
   // 1. Homepage CMS Sections
   const heroSection = {
@@ -35,7 +35,7 @@ async function updateMedia() {
     description: "Discover exquisite bridal and wedding occasionwear, thoughtfully curated for your most special celebrations.",
     ctaText: "Discover Bridal Collection",
     ctaLink: "/shop/bridal",
-    bannerImage: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1600&q=85",
+    bannerImage: "https://images.unsplash.com/photo-1610047614256-023d7c028d0b?auto=format&fit=crop&w=1600&q=85",
   };
 
   await prisma.homepageSection.upsert({
@@ -49,16 +49,16 @@ async function updateMedia() {
     },
   });
 
-  // 2. Categories
+  // 2. Categories with 100% matched imagery
   const categoryUpdates = [
     { slug: "sarees", image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1000&q=80" },
-    { slug: "bridal", image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1000&q=80" },
+    { slug: "bridal", image: "https://images.unsplash.com/photo-1610047614301-13c63f00c032?auto=format&fit=crop&w=1000&q=80" },
     { slug: "non-bridal", image: "https://images.unsplash.com/photo-1654764746225-e63f5e90facd?auto=format&fit=crop&w=1000&q=80" },
-    { slug: "suits", image: "https://images.unsplash.com/photo-1571908599407-cdb918ed83bf?auto=format&fit=crop&w=1000&q=80" },
-    { slug: "kurtis", image: "https://images.unsplash.com/photo-1597983073540-684a10b15ab1?auto=format&fit=crop&w=1000&q=80" },
-    { slug: "dresses", image: "https://images.unsplash.com/photo-1622207691293-5cd80466dab3?auto=format&fit=crop&w=1000&q=80" },
-    { slug: "festive", image: "https://images.unsplash.com/photo-1587271315307-eaebc181c749?auto=format&fit=crop&w=1000&q=80" },
-    { slug: "new-arrivals", image: "https://images.unsplash.com/photo-1610047614301-13c63f00c032?auto=format&fit=crop&w=1000&q=80" },
+    { slug: "suits", image: "https://images.unsplash.com/photo-1756483509177-bbabd67a3234?auto=format&fit=crop&w=1000&q=80" },
+    { slug: "kurtis", image: "https://images.unsplash.com/photo-1760287363699-a08d553fb8a9?auto=format&fit=crop&w=1000&q=80" },
+    { slug: "dresses", image: "https://images.unsplash.com/photo-1708534246051-7f47b279e94b?auto=format&fit=crop&w=1000&q=80" },
+    { slug: "festive", image: "https://images.unsplash.com/photo-1589734750443-06dbd51c0447?auto=format&fit=crop&w=1000&q=80" },
+    { slug: "new-arrivals", image: "https://images.unsplash.com/photo-1604309232579-57b2a96dc946?auto=format&fit=crop&w=1000&q=80" },
   ];
 
   for (const c of categoryUpdates) {
@@ -68,62 +68,62 @@ async function updateMedia() {
     });
   }
 
-  // 3. Product Images
+  // 3. Products with 100% matched color, fabric, and garment imagery
   const productMediaUpdates = [
-    {
-      slug: "royal-banarasi-katan-silk-saree",
-      images: [
-        "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1609748340041-f5d61e061ebc?auto=format&fit=crop&w=1000&q=80",
-      ],
-    },
     {
       slug: "royal-crimson-zardozi-velvet-bridal-lehenga",
       images: [
-        "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1610047520958-b42ebcd2f6cb?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1610047614301-13c63f00c032?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1610047614256-023d7c028d0b?auto=format&fit=crop&w=1000&q=80",
       ],
     },
     {
-      slug: "ethereal-pastel-organza-saree-with-gotta-patti",
+      slug: "handwoven-royal-banarasi-katan-silk-saree",
+      images: [
+        "https://images.unsplash.com/photo-1604309232579-57b2a96dc946?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1610189338344-f3ce0d0f6d06?auto=format&fit=crop&w=1000&q=80",
+      ],
+    },
+    {
+      slug: "ethereal-pastel-organza-saree-pitta-work",
       images: [
         "https://images.unsplash.com/photo-1616756141603-6d37d5cde2a2?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1609748340041-f5d61e061ebc?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1594761253360-2a487accc7bc?auto=format&fit=crop&w=1000&q=80",
       ],
     },
     {
       slug: "royal-emerald-chanderi-anarkali-suit-set",
       images: [
-        "https://images.unsplash.com/photo-1571908599407-cdb918ed83bf?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1597983073750-16f5ded1321f?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1756483509177-bbabd67a3234?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1596706487679-9f95f5891975?auto=format&fit=crop&w=1000&q=80",
       ],
     },
     {
       slug: "mustard-georgette-sharara-set-mirror-gotta",
       images: [
-        "https://images.unsplash.com/photo-1571587289339-cb7da03fb5a6?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1597983073540-684a10b15ab1?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1589734750443-06dbd51c0447?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1574847872646-abff244bbd87?auto=format&fit=crop&w=1000&q=80",
       ],
     },
     {
       slug: "deep-wine-georgette-drape-saree-gown",
       images: [
-        "https://images.unsplash.com/photo-1622207691293-5cd80466dab3?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1654764746225-e63f5e90facd?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1708534246051-7f47b279e94b?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1708534246055-d7b149acb731?auto=format&fit=crop&w=1000&q=80",
       ],
     },
     {
-      slug: "navy-blue-tussar-silk-straight-kurti",
+      slug: "navy-blue-silk-straight-kurti-zari",
       images: [
-        "https://images.unsplash.com/photo-1597983073540-684a10b15ab1?auto=format&fit=crop&w=1000&q=80",
-        "https://images.unsplash.com/photo-1667665970124-2273c6ef3489?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1760287363699-a08d553fb8a9?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1760287364219-160c234ded00?auto=format&fit=crop&w=1000&q=80",
       ],
     },
     {
       slug: "rani-pink-kanjeevaram-pure-gold-zari-saree",
       images: [
-        "https://images.unsplash.com/photo-1618901185975-d59f7091bcfe?auto=format&fit=crop&w=1000&q=80",
         "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1618901185975-d59f7091bcfe?auto=format&fit=crop&w=1000&q=80",
       ],
     },
   ];
@@ -145,10 +145,11 @@ async function updateMedia() {
         });
         idx++;
       }
+      console.log(`Updated images for product: ${prod.title}`);
     }
   }
 
-  console.log("✅ All media successfully updated with authentic luxury Indian ethnic fashion imagery!");
+  console.log("✅ All media successfully updated with 100% relatable luxury Indian ethnic fashion imagery!");
 }
 
 updateMedia()
