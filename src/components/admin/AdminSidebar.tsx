@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -49,17 +50,26 @@ export default function AdminSidebar() {
     <div className="flex flex-col h-full bg-espresso text-ivory justify-between">
       {/* Brand Header */}
       <div>
-        <div className="p-5 border-b border-chocolate/80 flex items-center justify-between">
-          <div>
-            <Link href="/admin" className="block">
-              <span className="font-serif text-xl font-medium tracking-wide text-ivory uppercase block">
+        <div className="p-4 border-b border-chocolate/80 flex items-center justify-between">
+          <Link href="/admin" className="flex items-center gap-2.5">
+            <div className="relative w-9 h-9 rounded-full overflow-hidden border border-gold/40 shadow-xs shrink-0">
+              <Image
+                src="/brand/saubhagya-logo-crest.png"
+                alt="Saubhagya Logo"
+                fill
+                className="object-cover"
+                sizes="36px"
+              />
+            </div>
+            <div>
+              <span className="font-serif text-lg font-medium tracking-wide text-ivory uppercase block leading-none">
                 Saubhagya
               </span>
-              <span className="text-[9px] tracking-[0.25em] text-champagne uppercase font-bold block -mt-1">
+              <span className="text-[8px] tracking-[0.2em] text-champagne uppercase font-bold block mt-1">
                 Enterprise Admin
               </span>
-            </Link>
-          </div>
+            </div>
+          </Link>
           <span className="bg-gold/20 text-champagne text-[9px] uppercase px-2 py-0.5 border border-gold/40 font-bold">
             Studio
           </span>

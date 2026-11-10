@@ -1,0 +1,3 @@
+{
+  "/api/reviews/create/route": "app/api/reviews/create/route.js"
+}

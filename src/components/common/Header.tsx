@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   Search,
@@ -82,11 +83,6 @@ export default function Header({
         image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80",
       },
     },
-    { label: "Sarees", href: "/shop/sarees" },
-    { label: "Bridal Collection", href: "/shop/bridal", highlight: true },
-    { label: "Suits", href: "/shop/suits" },
-    { label: "Kurtis", href: "/shop/kurtis" },
-    { label: "Dresses", href: "/shop/dresses" },
     { label: "About", href: "/about" },
     { label: "Our Store", href: "/contact" },
   ];
@@ -158,13 +154,25 @@ export default function Header({
 
             {/* Brand Logo - Centered on mobile, Left on desktop */}
             <div className="flex-1 lg:flex-none text-center lg:text-left">
-              <Link href="/" className="inline-block group">
-                <span className="block font-serif text-2xl sm:text-3xl lg:text-3xl font-normal tracking-wide text-espresso uppercase group-hover:text-gold transition-colors">
-                  Saubhagya
-                </span>
-                <span className="block text-[9px] sm:text-[10px] tracking-[0.25em] text-chocolate/80 uppercase font-medium -mt-1">
-                  Sarees & Bridal Studio
-                </span>
+              <Link href="/" className="inline-flex items-center gap-2.5 sm:gap-3 group">
+                <div className="relative w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-full overflow-hidden border border-gold/40 shadow-xs group-hover:scale-105 transition-transform duration-300">
+                  <Image
+                    src="/brand/saubhagya-logo-crest.png"
+                    alt="Saubhagya Sarees & Bridal Studio Logo"
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 640px) 36px, 44px"
+                  />
+                </div>
+                <div className="text-left">
+                  <span className="block font-serif text-xl sm:text-2xl lg:text-2xl font-normal tracking-wide text-espresso uppercase group-hover:text-gold transition-colors leading-none">
+                    Saubhagya
+                  </span>
+                  <span className="block text-[8px] sm:text-[9.5px] tracking-[0.25em] text-chocolate/80 uppercase font-medium mt-1">
+                    Sarees & Bridal Studio
+                  </span>
+                </div>
               </Link>
             </div>
 
@@ -179,11 +187,7 @@ export default function Header({
                 >
                   <Link
                     href={link.href}
-                    className={`text-xs uppercase tracking-widest font-medium transition-colors py-2 flex items-center gap-1 ${
-                      link.highlight
-                        ? "text-gold hover:text-espresso font-semibold"
-                        : "text-espresso/90 hover:text-gold"
-                    }`}
+                    className="text-xs uppercase tracking-widest font-medium transition-colors py-2 flex items-center gap-1 text-espresso/90 hover:text-gold"
                   >
                     {link.label}
                     {link.megaMenu && <ChevronDown className="w-3 h-3 opacity-60" />}
@@ -383,13 +387,24 @@ export default function Header({
             aria-modal="true"
           >
             <div className="p-5 border-b border-beige/40 flex items-center justify-between bg-cream/30">
-              <div>
-                <span className="font-serif text-xl font-medium tracking-wide text-espresso uppercase block">
-                  Saubhagya
-                </span>
-                <span className="text-[9px] tracking-[0.2em] text-chocolate/80 uppercase font-semibold">
-                  Hisar Bridal Studio
-                </span>
+              <div className="flex items-center gap-2.5">
+                <div className="relative w-9 h-9 shrink-0 rounded-full overflow-hidden border border-gold/40 shadow-xs">
+                  <Image
+                    src="/brand/saubhagya-logo-crest.png"
+                    alt="Saubhagya Logo"
+                    fill
+                    className="object-cover"
+                    sizes="36px"
+                  />
+                </div>
+                <div>
+                  <span className="font-serif text-lg font-medium tracking-wide text-espresso uppercase block leading-none">
+                    Saubhagya
+                  </span>
+                  <span className="text-[8px] tracking-[0.2em] text-chocolate/80 uppercase font-semibold mt-0.5 block">
+                    Hisar Bridal Studio
+                  </span>
+                </div>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
@@ -403,18 +418,29 @@ export default function Header({
             <div className="flex-1 overflow-y-auto p-5 space-y-4">
               <div className="space-y-1">
                 {navLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`block py-2.5 px-3 text-sm font-medium tracking-wider uppercase transition-colors ${
-                      link.highlight
-                        ? "bg-gold/15 text-gold font-bold border-l-2 border-gold"
-                        : "text-espresso hover:bg-cream/40"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
+                  <div key={link.label}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block py-2.5 px-3 text-sm font-medium tracking-wider uppercase transition-colors text-espresso hover:bg-cream/40"
+                    >
+                      {link.label}
+                    </Link>
+                    {link.items && (
+                      <div className="pl-4 py-1 space-y-1 bg-cream/20 border-l border-gold/40 my-1">
+                        {link.items.map((sub) => (
+                          <Link
+                            key={sub.name}
+                            href={sub.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="block py-1.5 px-3 text-xs text-charcoal/80 hover:text-gold"
+                          >
+                            {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
 

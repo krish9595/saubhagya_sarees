@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   MapPin,
   Phone,
@@ -84,13 +85,24 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-chocolate">
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-block">
-              <span className="block font-serif text-2xl lg:text-3xl font-medium tracking-wide text-ivory uppercase">
-                Saubhagya
-              </span>
-              <span className="block text-[10px] tracking-[0.25em] text-champagne uppercase font-medium -mt-1">
-                Sarees & Bridal Studio
-              </span>
+            <Link href="/" className="inline-flex items-center gap-3.5 group">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden border border-gold/40 shadow-xs shrink-0 group-hover:scale-105 transition-transform duration-300">
+                <Image
+                  src="/brand/saubhagya-logo-crest.png"
+                  alt="Saubhagya Sarees & Bridal Studio"
+                  fill
+                  className="object-cover"
+                  sizes="48px"
+                />
+              </div>
+              <div>
+                <span className="block font-serif text-2xl lg:text-3xl font-medium tracking-wide text-ivory uppercase group-hover:text-gold transition-colors leading-none">
+                  Saubhagya
+                </span>
+                <span className="block text-[10px] tracking-[0.25em] text-champagne uppercase font-medium mt-1">
+                  Sarees & Bridal Studio
+                </span>
+              </div>
             </Link>
 
             <p className="text-xs text-beige/80 leading-relaxed max-w-sm">

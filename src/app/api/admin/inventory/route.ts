@@ -14,7 +14,7 @@ export async function GET() {
         orderBy: { stockQuantity: "asc" },
       }),
       prisma.inventoryMovement.findMany({
-        take: 20,
+        take: 30,
         orderBy: { createdAt: "desc" },
         include: {
           createdByUser: { select: { name: true, email: true } },
@@ -31,10 +31,17 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { variantId, changeDelta, notes, changeType = "ADJUSTMENT" } = await req.json();
+    const body = await req.json();
+    const {
+      variantId,
+      changeDelta,
+      exactQuantity,
+      notes,
+      changeType = "ADJUSTMENT",
+    } = body;
 
-    if (!variantId || typeof changeDelta !== "number") {
-      return NextResponse.json({ success: false, message: "Missing required fields" }, { status: 400 });
+    if (!variantId) {
+      return NextResponse.json({ success: false, message: "Variant ID is required" }, { status: 400 });
     }
 
     const variant = await prisma.productVariant.findUnique({
@@ -46,11 +53,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: "Variant not found" }, { status: 404 });
     }
 
+    let calculatedDelta = 0;
+    let targetQuantity = 0;
+
+    if (typeof exactQuantity === "number") {
+      targetQuantity = Math.max(0, exactQuantity);
+      calculatedDelta = targetQuantity - variant.stockQuantity;
+    } else if (typeof changeDelta === "number") {
+      calculatedDelta = changeDelta;
+      targetQuantity = Math.max(0, variant.stockQuantity + changeDelta);
+    } else {
+      return NextResponse.json({ success: false, message: "Provide either changeDelta or exactQuantity" }, { status: 400 });
+    }
+
     const updated = await prisma.$transaction(async (tx) => {
       const updatedVariant = await tx.productVariant.update({
         where: { id: variantId },
         data: {
-          stockQuantity: { increment: changeDelta },
+          stockQuantity: targetQuantity,
         },
       });
 
@@ -78,9 +98,9 @@ export async function POST(req: NextRequest) {
           productId: variant.productId,
           variantId: variant.id,
           changeType,
-          quantityDelta: changeDelta,
+          quantityDelta: calculatedDelta,
           balanceAfter: updatedVariant.stockQuantity,
-          notes: notes || `Manual stock adjustment (${changeDelta > 0 ? `+${changeDelta}` : changeDelta})`,
+          notes: notes || `Stock updated to ${targetQuantity} units (${calculatedDelta >= 0 ? `+${calculatedDelta}` : calculatedDelta})`,
         },
       });
 
@@ -90,7 +110,7 @@ export async function POST(req: NextRequest) {
           action: "UPDATE",
           entity: "Inventory",
           entityId: variant.id,
-          details: `Stock adjustment for ${variant.product.title} (${variant.sku}): ${changeDelta > 0 ? `+${changeDelta}` : changeDelta} units. Balance: ${updatedVariant.stockQuantity}.`,
+          details: `Stock adjustment for ${variant.product.title} (${variant.sku}): ${calculatedDelta >= 0 ? `+${calculatedDelta}` : calculatedDelta} units. Balance: ${updatedVariant.stockQuantity}. Reason: ${changeType}`,
         },
       });
 
@@ -98,8 +118,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, updated });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Inventory update error:", error);
-    return NextResponse.json({ success: false, message: "Failed to adjust inventory" }, { status: 500 });
+    return NextResponse.json({ success: false, message: error?.message || "Failed to update inventory" }, { status: 500 });
   }
 }

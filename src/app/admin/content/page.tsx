@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { FileEdit, Save, Check, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import ImageUploader from "@/components/admin/ImageUploader";
 
 export default function AdminContentPage() {
   const [sections, setSections] = useState<any[]>([]);
@@ -93,7 +94,7 @@ export default function AdminContentPage() {
             Homepage CMS & Content Management
           </h1>
           <p className="text-xs text-charcoal/60">
-            Dynamically configure marketing banners, editorial campaigns, and announcement strips without code
+            Dynamically configure marketing banners, editorial campaigns, and upload photos directly from computer
           </p>
         </div>
         <Link
@@ -182,7 +183,7 @@ export default function AdminContentPage() {
               )}
             </div>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block uppercase font-semibold text-charcoal/80 mb-1">
@@ -223,16 +224,14 @@ export default function AdminContentPage() {
                 />
               </div>
 
-              <div>
-                <label className="block uppercase font-semibold text-charcoal/80 mb-1">
-                  Desktop Hero Image URL
-                </label>
-                <input
-                  type="url"
+              {/* Upload Hero Image from computer */}
+              <div className="p-4 bg-cream/20 border border-beige/60">
+                <ImageUploader
+                  label="Hero Banner Image (Upload From Computer)"
+                  helperText="Upload a high resolution 16:9 or 21:9 editorial campaign photograph"
+                  multiple={false}
                   value={heroDesktopImg}
-                  onChange={(e) => setHeroDesktopImg(e.target.value)}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                  onChange={(url) => setHeroDesktopImg(url)}
                 />
               </div>
 
@@ -273,7 +272,7 @@ export default function AdminContentPage() {
               )}
             </div>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-4 text-xs">
               <div>
                 <label className="block uppercase font-semibold text-charcoal/80 mb-1">
                   Bridal Feature Headline
@@ -300,15 +299,14 @@ export default function AdminContentPage() {
                 />
               </div>
 
-              <div>
-                <label className="block uppercase font-semibold text-charcoal/80 mb-1">
-                  Bridal Banner Image URL
-                </label>
-                <input
-                  type="url"
+              {/* Upload Bridal Banner from computer */}
+              <div className="p-4 bg-cream/20 border border-beige/60">
+                <ImageUploader
+                  label="Bridal Spotlight Banner (Upload From Computer)"
+                  helperText="Upload an opulent bridal lehenga or wedding editorial banner"
+                  multiple={false}
                   value={bridalBannerImg}
-                  onChange={(e) => setBridalBannerImg(e.target.value)}
-                  className="w-full p-2.5 bg-ivory border border-beige/80"
+                  onChange={(url) => setBridalBannerImg(url)}
                 />
               </div>
 

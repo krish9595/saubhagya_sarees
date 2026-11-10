@@ -52,6 +52,19 @@ export const metadata: Metadata = {
     title: "Saubhagya Sarees & Bridal Studio | Luxury Indian Ethnic Fashion",
     description: "Elegance Woven in Tradition. Premium sarees, bridal wear, and festive ethnic fashion.",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: ["/favicon.ico"],
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
