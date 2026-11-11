@@ -73,8 +73,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body className="min-h-screen bg-ivory text-charcoal flex flex-col selection:bg-gold selection:text-white">
+    <html lang="en" className={`${cormorant.variable} ${inter.variable} overflow-x-hidden max-w-full`}>
+      <body className="min-h-screen bg-ivory text-charcoal flex flex-col selection:bg-gold selection:text-white overflow-x-hidden max-w-full">
         <CartProvider>
           <WishlistProvider>
             {children}

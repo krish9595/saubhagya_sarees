@@ -92,19 +92,19 @@ export default function ProductCard({ product }: ProductCardProps) {
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Badges: New, Bestseller, Discount */}
-        <div className="absolute top-2.5 left-2.5 z-20 flex flex-col gap-1">
+        <div className="absolute top-2 left-2 sm:top-2.5 sm:left-2.5 z-20 flex flex-col gap-1">
           {product.isNewArrival && (
-            <span className="bg-espresso text-ivory text-[9px] uppercase tracking-widest font-bold px-2 py-0.5 shadow-xs">
+            <span className="bg-espresso text-ivory text-[8px] sm:text-[9px] uppercase tracking-wider sm:tracking-widest font-bold px-1.5 sm:px-2 py-0.5 shadow-xs">
               New
             </span>
           )}
           {product.isBestseller && (
-            <span className="bg-gold text-white text-[9px] uppercase tracking-widest font-bold px-2 py-0.5 shadow-xs">
+            <span className="bg-gold text-white text-[8px] sm:text-[9px] uppercase tracking-wider sm:tracking-widest font-bold px-1.5 sm:px-2 py-0.5 shadow-xs">
               Bestseller
             </span>
           )}
           {hasDiscount && (
-            <span className="bg-chocolate text-ivory text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 shadow-xs">
+            <span className="bg-chocolate text-ivory text-[8px] sm:text-[9px] uppercase tracking-wider font-semibold px-1.5 sm:px-2 py-0.5 shadow-xs">
               {discountPct}% Off
             </span>
           )}
@@ -113,14 +113,14 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Wishlist Button */}
         <button
           onClick={handleWishlistToggle}
-          className={`absolute top-2.5 right-2.5 z-20 p-2 rounded-full transition-all duration-200 ${
+          className={`absolute top-2 right-2 sm:top-2.5 sm:right-2.5 z-20 p-1.5 sm:p-2 rounded-full transition-all duration-200 ${
             inWishlist
               ? "bg-rose-50 text-rose-600 shadow-md"
-              : "bg-white/85 text-charcoal/70 hover:text-rose-600 hover:bg-white shadow-xs"
+              : "bg-white/90 text-charcoal/70 hover:text-rose-600 hover:bg-white shadow-xs"
           }`}
           aria-label={inWishlist ? "Remove from wishlist" : "Add to wishlist"}
         >
-          <Heart className={`w-4 h-4 ${inWishlist ? "fill-current text-rose-600" : ""}`} />
+          <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${inWishlist ? "fill-current text-rose-600" : ""}`} />
         </button>
 
         {/* Product Image Area */}
@@ -159,34 +159,34 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
 
         {/* Product Details */}
-        <div className="p-4 flex flex-col flex-1 justify-between bg-ivory/30">
+        <div className="p-2.5 sm:p-4 flex flex-col flex-1 justify-between bg-ivory/30">
           <div>
             {product.category && (
-              <span className="text-[10px] text-chocolate/70 uppercase tracking-widest block font-medium mb-1">
+              <span className="text-[9px] sm:text-[10px] text-chocolate/70 uppercase tracking-widest block font-medium mb-0.5 sm:mb-1">
                 {product.category.name}
               </span>
             )}
 
             <Link href={`/product/${product.slug}`}>
-              <h3 className="font-serif text-base font-normal text-espresso hover:text-gold line-clamp-1 transition-colors">
+              <h3 className="font-serif text-xs sm:text-base font-normal text-espresso hover:text-gold line-clamp-1 transition-colors">
                 {product.title}
               </h3>
             </Link>
 
             {product.fabric && (
-              <p className="text-[11px] text-charcoal/60 line-clamp-1 mt-0.5">
+              <p className="text-[10px] sm:text-[11px] text-charcoal/60 line-clamp-1 mt-0.5">
                 {product.fabric}
               </p>
             )}
           </div>
 
-          <div className="mt-3 pt-2 border-t border-beige/40 flex items-center justify-between">
-            <div className="flex items-baseline gap-2">
-              <span className="text-base font-semibold text-espresso">
+          <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2 border-t border-beige/40 flex items-center justify-between">
+            <div className="flex items-baseline gap-1.5 sm:gap-2">
+              <span className="text-sm sm:text-base font-semibold text-espresso">
                 ₹{priceNum.toLocaleString("en-IN")}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-charcoal/40 line-through">
+                <span className="text-[10px] sm:text-xs text-charcoal/40 line-through">
                   ₹{mrpNum.toLocaleString("en-IN")}
                 </span>
               )}
@@ -195,13 +195,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             {/* Quick Add Button for Mobile */}
             <button
               onClick={handleQuickAdd}
-              className="lg:hidden text-chocolate hover:text-gold p-1"
+              className="lg:hidden text-chocolate hover:text-gold p-1 bg-cream/50 rounded-full active:scale-90 transition-transform"
               aria-label="Add to Bag"
             >
               {addedNotice ? (
-                <Check className="w-4 h-4 text-emerald-600" />
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
               ) : (
-                <ShoppingBag className="w-4 h-4" />
+                <ShoppingBag className="w-3.5 h-3.5" />
               )}
             </button>
           </div>

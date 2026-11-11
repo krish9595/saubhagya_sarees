@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
-import { Filter, X, ChevronDown, SlidersHorizontal, Sparkles } from "lucide-react";
+import { Filter, X, ChevronDown, SlidersHorizontal, Sparkles, ArrowUpDown, Check } from "lucide-react";
 import ProductCard from "@/components/product/ProductCard";
 
 interface ProductItem {
@@ -50,6 +50,14 @@ export default function ShopClient({
   const [priceRange, setPriceRange] = useState<number>(100000);
   const [sortBy, setSortBy] = useState<string>("recommended");
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [mobileSortOpen, setMobileSortOpen] = useState(false);
+
+  // Active filter count
+  const activeFilterCount =
+    (selectedCategory !== "all" ? 1 : 0) +
+    (selectedOccasion !== "all" ? 1 : 0) +
+    (selectedFabric !== "all" ? 1 : 0) +
+    (priceRange < 100000 ? 1 : 0);
 
   // Extract unique filter options from actual products
   const occasions = useMemo(() => {
@@ -115,7 +123,7 @@ export default function ShopClient({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 pb-24 lg:pb-14">
       {/* Breadcrumb Navigation */}
       <nav aria-label="Breadcrumb" className="text-xs text-charcoal/60 mb-6 flex items-center gap-2">
         <Link href="/" className="hover:text-gold transition-colors">
@@ -146,14 +154,14 @@ export default function ShopClient({
       </div>
 
       {/* Controls Bar: Mobile filter button, Product count, Sorting */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 bg-cream/40 p-4 border border-beige/40">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 bg-cream/40 p-3 sm:p-4 border border-beige/40">
         <div className="flex items-center justify-between w-full sm:w-auto gap-4">
           <button
             onClick={() => setMobileFilterOpen(true)}
-            className="lg:hidden flex items-center gap-2 bg-white px-3.5 py-2 border border-beige/80 text-xs font-semibold uppercase tracking-wider text-espresso"
+            className="lg:hidden flex items-center gap-2 bg-white px-3 py-1.5 border border-beige/80 text-xs font-semibold uppercase tracking-wider text-espresso shadow-xs"
           >
-            <SlidersHorizontal className="w-4 h-4 text-gold" />
-            <span>Filters</span>
+            <SlidersHorizontal className="w-3.5 h-3.5 text-gold" />
+            <span>Filters {activeFilterCount > 0 ? `(${activeFilterCount})` : ""}</span>
           </button>
 
           <span className="text-xs text-charcoal/80">
@@ -179,6 +187,57 @@ export default function ShopClient({
           </select>
         </div>
       </div>
+
+      {/* Active Filter Chips */}
+      {activeFilterCount > 0 && (
+        <div className="flex flex-wrap items-center gap-2 mb-6 p-2.5 bg-ivory/60 border border-beige/40">
+          <span className="text-[11px] uppercase tracking-wider font-semibold text-charcoal/60 mr-1">
+            Active:
+          </span>
+          {selectedCategory !== "all" && (
+            <button
+              onClick={() => setSelectedCategory("all")}
+              className="inline-flex items-center gap-1.5 bg-white border border-beige/80 px-2.5 py-1 text-[11px] text-espresso hover:border-gold"
+            >
+              <span>Category: {categories.find((c) => c.slug === selectedCategory)?.name || selectedCategory}</span>
+              <X className="w-3 h-3 text-charcoal/50 hover:text-red-700" />
+            </button>
+          )}
+          {selectedOccasion !== "all" && (
+            <button
+              onClick={() => setSelectedOccasion("all")}
+              className="inline-flex items-center gap-1.5 bg-white border border-beige/80 px-2.5 py-1 text-[11px] text-espresso hover:border-gold"
+            >
+              <span>Occasion: {selectedOccasion}</span>
+              <X className="w-3 h-3 text-charcoal/50 hover:text-red-700" />
+            </button>
+          )}
+          {selectedFabric !== "all" && (
+            <button
+              onClick={() => setSelectedFabric("all")}
+              className="inline-flex items-center gap-1.5 bg-white border border-beige/80 px-2.5 py-1 text-[11px] text-espresso hover:border-gold"
+            >
+              <span>Fabric: {selectedFabric}</span>
+              <X className="w-3 h-3 text-charcoal/50 hover:text-red-700" />
+            </button>
+          )}
+          {priceRange < 100000 && (
+            <button
+              onClick={() => setPriceRange(100000)}
+              className="inline-flex items-center gap-1.5 bg-white border border-beige/80 px-2.5 py-1 text-[11px] text-espresso hover:border-gold"
+            >
+              <span>Under ₹{priceRange.toLocaleString("en-IN")}</span>
+              <X className="w-3 h-3 text-charcoal/50 hover:text-red-700" />
+            </button>
+          )}
+          <button
+            onClick={clearAllFilters}
+            className="text-[11px] font-semibold text-chocolate hover:text-gold uppercase tracking-wider underline ml-2"
+          >
+            Clear All
+          </button>
+        </div>
+      )}
 
       {/* Layout Grid: Desktop Sidebar + Product Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -339,55 +398,155 @@ export default function ShopClient({
         </div>
       </div>
 
-      {/* Mobile Filter Drawer conforming to Modern Web Guidance */}
-      {mobileFilterOpen && (
-        <div className="fixed inset-0 z-50 flex lg:hidden">
+      {/* Mobile Floating Sort & Filter Action Bar */}
+      <div className="fixed bottom-18 inset-x-0 z-30 lg:hidden flex justify-center pointer-events-none px-4">
+        <div className="pointer-events-auto bg-espresso text-ivory rounded-full px-5 py-2.5 flex items-center gap-4 shadow-2xl border border-gold/40 backdrop-blur-md">
+          <button
+            onClick={() => setMobileSortOpen(true)}
+            className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-champagne hover:text-white transition-colors"
+          >
+            <ArrowUpDown className="w-3.5 h-3.5" />
+            <span>Sort</span>
+          </button>
+          <div className="w-px h-3.5 bg-gold/40" />
+          <button
+            onClick={() => setMobileFilterOpen(true)}
+            className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ivory hover:text-gold transition-colors"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5 text-gold" />
+            <span>Filters {activeFilterCount > 0 ? `(${activeFilterCount})` : ""}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Sort Bottom Sheet */}
+      {mobileSortOpen && (
+        <div className="fixed inset-0 z-50 flex items-end lg:hidden">
           <div
-            className="fixed inset-0 bg-charcoal/60 backdrop-blur-xs"
-            onClick={() => setMobileFilterOpen(false)}
+            className="fixed inset-0 bg-charcoal/70 backdrop-blur-xs transition-opacity"
+            onClick={() => setMobileSortOpen(false)}
             aria-hidden="true"
           />
-          <aside
-            className="relative z-10 w-4/5 max-w-xs bg-ivory text-charcoal h-full flex flex-col shadow-2xl border-r border-beige/40"
+          <div
+            className="relative z-10 w-full bg-white rounded-t-2xl shadow-2xl border-t border-beige/60 p-5 space-y-4 max-h-[80vh] overflow-y-auto"
             role="dialog"
-            aria-label="Filter Options"
+            aria-label="Sort Options"
             aria-modal="true"
           >
-            <div className="p-4 border-b border-beige/40 flex items-center justify-between bg-cream/40">
-              <h3 className="font-serif text-lg font-medium text-espresso">Filter Products</h3>
+            <div className="flex items-center justify-between pb-3 border-b border-beige/40">
+              <h3 className="font-serif text-lg font-medium text-espresso flex items-center gap-2">
+                <ArrowUpDown className="w-4 h-4 text-gold" />
+                Sort Collection
+              </h3>
               <button
-                onClick={() => setMobileFilterOpen(false)}
-                className="p-1 text-charcoal/70"
-                aria-label="Close filters"
+                onClick={() => setMobileSortOpen(false)}
+                className="p-1 text-charcoal/60 hover:text-espresso"
+                aria-label="Close"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
+            <div className="space-y-1 text-xs">
+              {[
+                { id: "recommended", label: "Curated / Recommended" },
+                { id: "newest", label: "Newest Additions" },
+                { id: "price_asc", label: "Price: Low to High" },
+                { id: "price_desc", label: "Price: High to Low" },
+                { id: "bestseller", label: "Bestselling" },
+              ].map((opt) => (
+                <button
+                  key={opt.id}
+                  onClick={() => {
+                    setSortBy(opt.id);
+                    setMobileSortOpen(false);
+                  }}
+                  className={`w-full flex items-center justify-between py-3 px-3 text-left transition-colors border-b border-beige/20 ${
+                    sortBy === opt.id
+                      ? "text-espresso font-bold bg-cream/40"
+                      : "text-charcoal/80 hover:bg-ivory"
+                  }`}
+                >
+                  <span>{opt.label}</span>
+                  {sortBy === opt.id && <Check className="w-4 h-4 text-gold" />}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Filter Bottom Sheet conforming to Modern Web Guidance */}
+      {mobileFilterOpen && (
+        <div className="fixed inset-0 z-50 flex items-end lg:hidden">
+          <div
+            className="fixed inset-0 bg-charcoal/70 backdrop-blur-xs transition-opacity"
+            onClick={() => setMobileFilterOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            className="relative z-10 w-full bg-white rounded-t-2xl shadow-2xl border-t border-beige/60 flex flex-col max-h-[85vh]"
+            role="dialog"
+            aria-label="Filter Options"
+            aria-modal="true"
+          >
+            {/* Sheet Header */}
+            <div className="p-4 border-b border-beige/40 flex items-center justify-between bg-cream/30 rounded-t-2xl">
+              <div>
+                <h3 className="font-serif text-lg font-medium text-espresso flex items-center gap-2">
+                  <SlidersHorizontal className="w-4 h-4 text-gold" />
+                  Filter Creations
+                </h3>
+                <span className="text-[11px] text-charcoal/60">
+                  {filteredProducts.length} items match your criteria
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                {activeFilterCount > 0 && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="text-xs text-chocolate hover:text-gold font-semibold uppercase tracking-wider underline"
+                  >
+                    Reset
+                  </button>
+                )}
+                <button
+                  onClick={() => setMobileFilterOpen(false)}
+                  className="p-1 text-charcoal/60 hover:text-espresso"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Scrollable Filters */}
             <div className="flex-1 overflow-y-auto p-5 space-y-6">
               {/* Category */}
               <div>
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-espresso mb-2">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-espresso mb-2.5">
                   Category
                 </h4>
-                <div className="space-y-1 text-xs">
+                <div className="flex flex-wrap gap-2">
                   <button
-                    onClick={() => {
-                      setSelectedCategory("all");
-                      setMobileFilterOpen(false);
-                    }}
-                    className={`block w-full text-left py-1.5 px-2 ${selectedCategory === "all" ? "bg-cream font-bold" : ""}`}
+                    onClick={() => setSelectedCategory("all")}
+                    className={`text-xs px-3 py-1.5 border transition-all ${
+                      selectedCategory === "all"
+                        ? "border-espresso bg-espresso text-ivory font-semibold shadow-xs"
+                        : "border-beige/80 bg-white text-charcoal hover:border-gold"
+                    }`}
                   >
                     All Categories
                   </button>
                   {categories.map((c) => (
                     <button
                       key={c.id}
-                      onClick={() => {
-                        setSelectedCategory(c.slug);
-                        setMobileFilterOpen(false);
-                      }}
-                      className={`block w-full text-left py-1.5 px-2 ${selectedCategory === c.slug ? "bg-cream font-bold" : ""}`}
+                      onClick={() => setSelectedCategory(c.slug)}
+                      className={`text-xs px-3 py-1.5 border transition-all ${
+                        selectedCategory === c.slug
+                          ? "border-espresso bg-espresso text-ivory font-semibold shadow-xs"
+                          : "border-beige/80 bg-white text-charcoal hover:border-gold"
+                      }`}
                     >
                       {c.name}
                     </button>
@@ -395,11 +554,11 @@ export default function ShopClient({
                 </div>
               </div>
 
-              {/* Price */}
+              {/* Price Range Slider */}
               <div className="border-t border-beige/30 pt-4">
                 <div className="flex justify-between items-center mb-2 text-xs">
                   <span className="font-semibold uppercase tracking-wider text-espresso">Max Price</span>
-                  <span className="font-bold text-chocolate">₹{priceRange.toLocaleString("en-IN")}</span>
+                  <span className="font-bold text-chocolate text-sm">₹{priceRange.toLocaleString("en-IN")}</span>
                 </div>
                 <input
                   type="range"
@@ -410,22 +569,97 @@ export default function ShopClient({
                   onChange={(e) => setPriceRange(Number(e.target.value))}
                   className="w-full accent-[#B18A4A]"
                 />
+                <div className="flex justify-between text-[10px] text-charcoal/50 mt-1">
+                  <span>₹3,000</span>
+                  <span>₹1,00,000+</span>
+                </div>
               </div>
 
-              {/* Reset */}
-              <div className="pt-4 border-t border-beige/30">
-                <button
-                  onClick={() => {
-                    clearAllFilters();
-                    setMobileFilterOpen(false);
-                  }}
-                  className="w-full py-2.5 bg-chocolate text-ivory text-xs uppercase tracking-widest font-semibold"
-                >
-                  Clear Filters
-                </button>
-              </div>
+              {/* Occasion */}
+              {occasions.length > 0 && (
+                <div className="border-t border-beige/30 pt-4">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-espresso mb-2.5">
+                    Occasion
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setSelectedOccasion("all")}
+                      className={`text-xs px-3 py-1.5 border transition-all ${
+                        selectedOccasion === "all"
+                          ? "border-espresso bg-espresso text-ivory font-semibold"
+                          : "border-beige/80 bg-white text-charcoal"
+                      }`}
+                    >
+                      All
+                    </button>
+                    {occasions.map((occ) => (
+                      <button
+                        key={occ}
+                        onClick={() => setSelectedOccasion(occ)}
+                        className={`text-xs px-3 py-1.5 border transition-all ${
+                          selectedOccasion === occ
+                            ? "border-espresso bg-espresso text-ivory font-semibold"
+                            : "border-beige/80 bg-white text-charcoal"
+                        }`}
+                      >
+                        {occ}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Fabric */}
+              {fabrics.length > 0 && (
+                <div className="border-t border-beige/30 pt-4">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-espresso mb-2.5">
+                    Fabric Type
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      onClick={() => setSelectedFabric("all")}
+                      className={`text-xs px-3 py-1.5 border transition-all ${
+                        selectedFabric === "all"
+                          ? "border-espresso bg-espresso text-ivory font-semibold"
+                          : "border-beige/80 bg-white text-charcoal"
+                      }`}
+                    >
+                      All
+                    </button>
+                    {fabrics.map((fab) => (
+                      <button
+                        key={fab}
+                        onClick={() => setSelectedFabric(fab)}
+                        className={`text-xs px-3 py-1.5 border transition-all ${
+                          selectedFabric === fab
+                            ? "border-espresso bg-espresso text-ivory font-semibold"
+                            : "border-beige/80 bg-white text-charcoal"
+                        }`}
+                      >
+                        {fab}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </aside>
+
+            {/* Sticky Action Footer */}
+            <div className="p-4 border-t border-beige/40 bg-white flex gap-3">
+              <button
+                onClick={clearAllFilters}
+                className="flex-1 py-3 border border-chocolate text-chocolate text-xs uppercase tracking-widest font-semibold text-center"
+              >
+                Clear All
+              </button>
+              <button
+                onClick={() => setMobileFilterOpen(false)}
+                className="flex-2 py-3 bg-chocolate hover:bg-espresso text-ivory text-xs uppercase tracking-widest font-semibold text-center shadow-md"
+              >
+                Show {filteredProducts.length} Results
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

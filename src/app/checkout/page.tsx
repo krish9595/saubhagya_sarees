@@ -325,7 +325,7 @@ export default function CheckoutPage() {
       </header>
 
       {/* Main Checkout Form */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14 pb-24 lg:pb-14">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left: Customer & Address Form */}
           <div className="lg:col-span-7 bg-white p-6 sm:p-8 border border-beige/40 shadow-xs space-y-8">
@@ -348,7 +348,7 @@ export default function CheckoutPage() {
                       value={formData.fullName}
                       onChange={handleInputChange}
                       placeholder="e.g. Pooja Singhal"
-                      className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                      className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                       required
                     />
                   </div>
@@ -363,7 +363,7 @@ export default function CheckoutPage() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="e.g. 98123 45678"
-                      className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                      className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                       required
                     />
                   </div>
@@ -378,7 +378,7 @@ export default function CheckoutPage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="e.g. pooja@example.com"
-                      className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                      className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                     />
                   </div>
                 </div>
@@ -402,7 +402,7 @@ export default function CheckoutPage() {
                       value={formData.streetAddress}
                       onChange={handleInputChange}
                       placeholder="e.g. House 142, Sector 14, Urban Estate"
-                      className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                      className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                       required
                     />
                   </div>
@@ -419,7 +419,7 @@ export default function CheckoutPage() {
                         value={formData.landmark}
                         onChange={handleInputChange}
                         placeholder="Near Jindal Park / Market"
-                        className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                        className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                       />
                     </div>
                     <div>
@@ -434,7 +434,7 @@ export default function CheckoutPage() {
                         value={formData.postalCode}
                         onChange={handleInputChange}
                         placeholder="e.g. 125001"
-                        className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                        className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                         required
                       />
                     </div>
@@ -451,7 +451,7 @@ export default function CheckoutPage() {
                         name="city"
                         value={formData.city}
                         onChange={handleInputChange}
-                        className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                        className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                         required
                       />
                     </div>
@@ -465,7 +465,7 @@ export default function CheckoutPage() {
                         name="state"
                         value={formData.state}
                         onChange={handleInputChange}
-                        className="w-full p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                        className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                         required
                       />
                     </div>
@@ -532,7 +532,7 @@ export default function CheckoutPage() {
                   onChange={handleInputChange}
                   rows={2}
                   placeholder="e.g. Call before delivery, gift wrap, urgent bridal dispatch..."
-                  className="w-full text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
+                  className="w-full text-base sm:text-xs p-2.5 bg-ivory border border-beige/80 focus:outline-none focus:border-gold"
                 />
               </div>
 

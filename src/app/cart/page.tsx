@@ -54,7 +54,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen flex flex-col bg-ivory">
       <Header />
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 pb-24 lg:pb-16 w-full">
         <div className="border-b border-beige/40 pb-6 mb-8 flex flex-col sm:flex-row items-start sm:items-end justify-between">
           <div>
             <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-gold block mb-1">
@@ -118,72 +118,72 @@ export default function CartPage() {
                 {items.map((item) => (
                   <div
                     key={`${item.productId}-${item.variantId || "default"}`}
-                    className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 items-start"
+                    className="p-3.5 sm:p-6 flex flex-row gap-3 sm:gap-6 items-start"
                   >
-                    <div className="relative w-24 sm:w-28 aspect-3/4 bg-cream shrink-0 overflow-hidden border border-beige/40">
+                    <div className="relative w-20 sm:w-28 aspect-3/4 bg-cream shrink-0 overflow-hidden border border-beige/40">
                       <Image
                         src={item.image}
                         alt={item.title}
                         fill
                         className="object-cover"
-                        sizes="112px"
+                        sizes="(max-width: 640px) 80px, 112px"
                       />
                     </div>
 
-                    <div className="flex-1 flex flex-col justify-between w-full h-full min-h-[120px]">
+                    <div className="flex-1 flex flex-col justify-between w-full h-full min-h-[100px] sm:min-h-[120px]">
                       <div>
-                        <div className="flex items-start justify-between gap-4">
+                        <div className="flex items-start justify-between gap-2 sm:gap-4">
                           <Link
                             href={`/product/${item.slug}`}
-                            className="font-serif text-lg font-normal text-espresso hover:text-gold transition-colors"
+                            className="font-serif text-sm sm:text-lg font-normal text-espresso hover:text-gold transition-colors line-clamp-2"
                           >
                             {item.title}
                           </Link>
                           <button
                             onClick={() => removeItem(item.productId, item.variantId)}
-                            className="text-charcoal/40 hover:text-red-700 transition-colors p-1"
+                            className="text-charcoal/40 hover:text-red-700 transition-colors p-1 shrink-0"
                             aria-label="Remove item"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                           </button>
                         </div>
 
-                        <div className="text-xs text-charcoal/60 mt-1 space-x-3">
+                        <div className="text-[11px] sm:text-xs text-charcoal/60 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
                           {item.size && <span>Size: <strong>{item.size}</strong></span>}
                           {item.color && <span>• Colour: <strong>{item.color}</strong></span>}
-                          <span>• SKU: {item.sku}</span>
+                          <span className="hidden sm:inline">• SKU: {item.sku}</span>
                         </div>
 
                         {item.customMeasurements && (
-                          <div className="mt-2 p-2 bg-cream/40 border border-beige/30 text-[11px] text-charcoal/80">
-                            <strong>Custom Measurements:</strong> {item.customMeasurements}
+                          <div className="mt-1.5 p-1.5 sm:p-2 bg-cream/40 border border-beige/30 text-[10px] sm:text-[11px] text-charcoal/80">
+                            <strong>Custom:</strong> {item.customMeasurements}
                           </div>
                         )}
                       </div>
 
-                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-beige/20">
+                      <div className="flex items-center justify-between mt-3 sm:mt-4 pt-2 sm:pt-3 border-t border-beige/20">
                         {/* Quantity */}
                         <div className="flex items-center border border-beige/80 bg-ivory">
                           <button
                             onClick={() => updateQuantity(item.productId, item.quantity - 1, item.variantId)}
-                            className="p-1.5 hover:bg-beige/40 text-charcoal"
+                            className="p-1 sm:p-1.5 hover:bg-beige/40 text-charcoal"
                             aria-label="Decrease quantity"
                           >
-                            <Minus className="w-3.5 h-3.5" />
+                            <Minus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                           </button>
-                          <span className="px-3.5 text-xs font-semibold">{item.quantity}</span>
+                          <span className="px-2.5 sm:px-3.5 text-xs font-semibold">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.productId, item.quantity + 1, item.variantId)}
-                            className="p-1.5 hover:bg-beige/40 text-charcoal"
+                            className="p-1 sm:p-1.5 hover:bg-beige/40 text-charcoal"
                             aria-label="Increase quantity"
                           >
-                            <Plus className="w-3.5 h-3.5" />
+                            <Plus className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                           </button>
                         </div>
 
                         {/* Price */}
                         <div className="text-right">
-                          <span className="text-lg font-semibold text-espresso">
+                          <span className="text-base sm:text-lg font-semibold text-espresso">
                             ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                           </span>
                         </div>

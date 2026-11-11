@@ -12,9 +12,11 @@ import {
   Menu,
   X,
   ChevronDown,
+  ChevronRight,
   Sparkles,
   MapPin,
   Phone,
+  Crown,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -38,6 +40,7 @@ export default function Header({
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
+  const [mobileShopExpanded, setMobileShopExpanded] = useState(true);
 
   useEffect(() => {
     let ticking = false;
@@ -91,9 +94,10 @@ export default function Header({
     <>
       <header className="w-full z-40 relative">
         {/* Top Announcement Bar */}
-        <div className="bg-espresso text-ivory px-4 py-2 text-xs tracking-wider border-b border-gold/30">
-          <div className="max-w-7xl mx-auto flex items-center justify-between text-center">
-            <div className="hidden lg:flex items-center gap-4 text-beige/70 text-[11px]">
+        <div className="bg-espresso text-ivory text-xs tracking-wider border-b border-gold/30">
+          {/* Desktop Announcement Layout (100% UNCHANGED) */}
+          <div className="hidden lg:flex max-w-7xl mx-auto px-4 py-2 items-center justify-between text-center">
+            <div className="flex items-center gap-4 text-beige/70 text-[11px]">
               <span className="flex items-center gap-1">
                 <MapPin className="w-3.5 h-3.5 text-gold" />
                 Hisar Wholesale Cloth Market
@@ -104,16 +108,16 @@ export default function Header({
               </span>
             </div>
 
-            <div className="w-full lg:w-auto flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <span className="bg-gold/20 text-champagne px-2 py-0.5 text-[10px] uppercase font-bold tracking-widest border border-gold/40">
                 {announcementBadge}
               </span>
-              <span className="text-[11px] sm:text-xs text-ivory/95 font-medium">
+              <span className="text-xs text-ivory/95 font-medium">
                 {announcementText}
               </span>
             </div>
 
-            <div className="hidden lg:flex items-center gap-3 text-[11px] text-beige/80">
+            <div className="flex items-center gap-3 text-[11px] text-beige/80">
               <Link href="/track-order" className="hover:text-gold transition-colors">
                 Track Order
               </Link>
@@ -123,60 +127,72 @@ export default function Header({
               </Link>
             </div>
           </div>
+
+          {/* Mobile Announcement Bar (Slim, Elegant, Single-line) */}
+          <div className="lg:hidden px-3 py-1.5 flex items-center justify-center text-center overflow-hidden">
+            <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-ivory/95 font-medium truncate">
+              <span className="bg-gold/20 text-champagne px-1.5 py-0.2 uppercase font-bold tracking-wider text-[9px] border border-gold/40 shrink-0">
+                {announcementBadge}
+              </span>
+              <span className="truncate">
+                Free Pan-India Delivery on Orders ₹4,999+ • Hisar Studio
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Main Sticky Navigation Bar */}
         <nav
           className={`w-full transition-all duration-300 ${
             isScrolled
-              ? "fixed top-0 left-0 bg-ivory/95 backdrop-blur-md shadow-md py-3 border-b border-beige/60 z-40"
-              : "bg-ivory py-4 border-b border-beige/40"
+              ? "fixed top-0 left-0 bg-ivory/95 backdrop-blur-md shadow-md py-2.5 lg:py-3 border-b border-beige/60 z-40"
+              : "bg-ivory py-3 lg:py-4 border-b border-beige/40"
           }`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            {/* Left: Mobile Menu Trigger */}
-            <div className="flex items-center lg:hidden">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between">
+            {/* Left: Mobile Controls (Menu Trigger & Search) */}
+            <div className="flex items-center lg:hidden gap-0.5 shrink-0 w-16">
               <button
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-2 text-espresso hover:text-gold transition-colors"
+                className="p-1.5 text-espresso hover:text-gold transition-colors"
                 aria-label="Open mobile navigation menu"
               >
-                <Menu className="w-6 h-6" />
+                <Menu className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setSearchOpen(true)}
-                className="p-2 text-espresso hover:text-gold transition-colors ml-1"
+                className="p-1.5 text-espresso hover:text-gold transition-colors"
                 aria-label="Open search dialog"
               >
-                <Search className="w-5 h-5" />
+                <Search className="w-4 h-4" />
               </button>
             </div>
 
             {/* Brand Logo - Centered on mobile, Left on desktop */}
-            <div className="flex-1 lg:flex-none text-center lg:text-left">
-              <Link href="/" className="inline-flex items-center gap-2.5 sm:gap-3 group">
-                <div className="relative w-9 h-9 sm:w-11 sm:h-11 shrink-0 rounded-full overflow-hidden border border-gold/40 shadow-xs group-hover:scale-105 transition-transform duration-300">
+            <div className="flex-1 lg:flex-none flex justify-center lg:justify-start items-center min-w-0 px-1">
+              <Link href="/" className="inline-flex items-center gap-1.5 sm:gap-3 group max-w-full">
+                <div className="relative w-7 h-7 sm:w-11 sm:h-11 shrink-0 rounded-full overflow-hidden border border-gold/40 shadow-xs group-hover:scale-105 transition-transform duration-300">
                   <Image
                     src="/brand/saubhagya-logo-crest.png"
                     alt="Saubhagya Sarees & Bridal Studio Logo"
                     fill
                     className="object-cover"
                     priority
-                    sizes="(max-width: 640px) 36px, 44px"
+                    sizes="(max-width: 640px) 28px, 44px"
                   />
                 </div>
-                <div className="text-left">
-                  <span className="block font-serif text-xl sm:text-2xl lg:text-2xl font-normal tracking-wide text-espresso uppercase group-hover:text-gold transition-colors leading-none">
+                <div className="text-left shrink min-w-0">
+                  <span className="block font-serif text-base sm:text-2xl font-normal tracking-wide text-espresso uppercase group-hover:text-gold transition-colors leading-none truncate">
                     Saubhagya
                   </span>
-                  <span className="block text-[8px] sm:text-[9.5px] tracking-[0.25em] text-chocolate/80 uppercase font-medium mt-1">
+                  <span className="block text-[7px] sm:text-[9.5px] tracking-[0.16em] sm:tracking-[0.25em] text-chocolate/80 uppercase font-medium mt-0.5 truncate">
                     Sarees & Bridal Studio
                   </span>
                 </div>
               </Link>
             </div>
 
-            {/* Center Desktop Navigation */}
+            {/* Center Desktop Navigation (100% UNCHANGED) */}
             <div className="hidden lg:flex items-center space-x-7">
               {navLinks.map((link) => (
                 <div
@@ -250,8 +266,9 @@ export default function Header({
               ))}
             </div>
 
-            {/* Right Icons: Search, Wishlist, Account, Cart */}
-            <div className="flex items-center space-x-3 sm:space-x-4">
+            {/* Right Icons */}
+            <div className="flex items-center justify-end space-x-1.5 sm:space-x-3 lg:space-x-4 shrink-0 w-16 lg:w-auto">
+              {/* Desktop-only Search button */}
               <button
                 onClick={() => setSearchOpen(true)}
                 className="hidden lg:flex items-center text-espresso hover:text-gold transition-colors p-2"
@@ -260,64 +277,79 @@ export default function Header({
                 <Search className="w-5 h-5" />
               </button>
 
+              {/* Desktop-only Account button (on mobile, accessible via bottom bar & drawer) */}
               <Link
                 href="/account"
-                className="text-espresso hover:text-gold transition-colors p-2"
+                className="hidden lg:flex text-espresso hover:text-gold transition-colors p-2"
                 aria-label="Customer Account"
               >
                 <User className="w-5 h-5" />
               </Link>
 
+              {/* Wishlist Link */}
               <Link
                 href="/wishlist"
-                className="relative text-espresso hover:text-gold transition-colors p-2"
+                className="relative text-espresso hover:text-gold transition-colors p-1.5 sm:p-2"
                 aria-label={`Wishlist (${wishlistCount} items)`}
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                 {wishlistCount > 0 && (
-                  <span className="absolute top-1 right-1 bg-gold text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute top-0.5 right-0.5 bg-gold text-white text-[9px] font-bold w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full flex items-center justify-center">
                     {wishlistCount}
                   </span>
                 )}
               </Link>
 
+              {/* Cart Button: Desktop uses full pill; Mobile uses sleek compact icon button */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative bg-chocolate hover:bg-espresso text-ivory px-3.5 py-2 flex items-center gap-2 transition-colors group shadow-xs"
+                className="hidden lg:flex relative bg-chocolate hover:bg-espresso text-ivory px-3.5 py-2 items-center gap-2 transition-colors group shadow-xs"
                 aria-label={`Shopping bag with ${itemCount} items`}
               >
                 <ShoppingBag className="w-4 h-4 text-champagne" />
-                <span className="text-xs font-semibold uppercase tracking-wider hidden sm:inline-block">
+                <span className="text-xs font-semibold uppercase tracking-wider">
                   Bag
                 </span>
                 <span className="bg-gold text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                   {itemCount}
                 </span>
               </button>
+
+              {/* Mobile-only compact Bag trigger */}
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="lg:hidden relative p-1.5 text-espresso hover:text-gold transition-colors"
+                aria-label={`Open shopping bag (${itemCount} items)`}
+              >
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
+                {itemCount > 0 && (
+                  <span className="absolute top-0.5 right-0 bg-chocolate text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-xs">
+                    {itemCount}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
         </nav>
       </header>
 
-      {/* Modern Web Guidance: Native dialog for search overlay */}
+      {/* Search Overlay */}
       {searchOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-charcoal/70 backdrop-blur-xs">
           <div
-            className="fixed inset-0 bg-charcoal/70 backdrop-blur-xs"
+            className="fixed inset-0"
             onClick={() => setSearchOpen(false)}
             aria-hidden="true"
           />
           <div
-            className="relative z-10 w-full max-w-2xl bg-ivory border border-beige/60 shadow-2xl p-6 sm:p-8"
+            className="relative z-10 w-full max-w-2xl bg-ivory border border-beige/60 shadow-2xl p-6"
             role="dialog"
-            aria-label="Product Search"
             aria-modal="true"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-beige/40">
-              <h3 className="text-xl font-serif text-espresso font-medium flex items-center gap-2">
-                <Search className="w-5 h-5 text-gold" />
-                Search Saubhagya Catalogue
-              </h3>
+            <div className="flex items-center justify-between pb-3 border-b border-beige/40">
+              <span className="text-xs uppercase tracking-widest font-semibold text-chocolate">
+                Search Collections & Designs
+              </span>
               <button
                 onClick={() => setSearchOpen(false)}
                 className="p-1 text-charcoal/60 hover:text-espresso"
@@ -327,28 +359,22 @@ export default function Header({
               </button>
             </div>
 
-            <form onSubmit={handleSearchSubmit} className="mt-6">
-              <div className="relative">
+            <form onSubmit={handleSearchSubmit} className="mt-4">
+              <div className="relative flex items-center">
                 <input
-                  type="search"
+                  type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by saree type, bridal lehenga, fabric, colour, or SKU..."
-                  className="w-full pl-4 pr-12 py-3.5 bg-cream/30 border border-beige/80 text-sm focus:outline-none focus:border-gold text-charcoal"
+                  placeholder="Search by fabric, color, occasion (e.g. Banarasi, Red, Bridal)..."
+                  className="w-full pl-10 pr-4 py-3 bg-white border border-beige/60 focus:outline-none focus:border-gold font-serif text-base text-espresso"
                   autoFocus
                 />
-                <button
-                  type="submit"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-chocolate hover:text-gold"
-                  aria-label="Submit Search"
-                >
-                  <Search className="w-5 h-5" />
-                </button>
+                <Search className="w-5 h-5 text-gold absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-charcoal/70">
                 <span className="text-[11px] font-semibold text-espresso uppercase tracking-wider">
-                  Popular Searches:
+                  Popular:
                 </span>
                 {["Banarasi Katan", "Bridal Velvet Lehenga", "Organza Sarees", "Emerald Anarkali", "Sharara Sets"].map(
                   (term) => (
@@ -360,7 +386,7 @@ export default function Header({
                         router.push(`/search?q=${encodeURIComponent(term)}`);
                         setSearchOpen(false);
                       }}
-                      className="px-2.5 py-1 bg-cream/70 hover:bg-beige/40 text-charcoal border border-beige/40 rounded-none transition-colors"
+                      className="px-2 py-0.5 bg-cream/70 hover:bg-beige/40 text-charcoal text-[11px] border border-beige/40 transition-colors"
                     >
                       {term}
                     </button>
@@ -372,21 +398,22 @@ export default function Header({
         </div>
       )}
 
-      {/* Mobile Navigation Drawer conforming to modern web guidance */}
+      {/* Redesigned Luxury Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div
-            className="fixed inset-0 bg-charcoal/60 backdrop-blur-xs"
+            className="fixed inset-0 bg-charcoal/70 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
           <aside
-            className="relative z-10 w-4/5 max-w-xs bg-ivory text-charcoal h-full flex flex-col shadow-2xl border-r border-beige/40"
+            className="relative z-10 w-[84%] max-w-sm bg-ivory text-charcoal h-full flex flex-col shadow-2xl border-r border-beige/40 overflow-hidden"
             role="dialog"
-            aria-label="Mobile Navigation"
+            aria-label="Mobile Navigation Drawer"
             aria-modal="true"
           >
-            <div className="p-5 border-b border-beige/40 flex items-center justify-between bg-cream/30">
+            {/* Drawer Header */}
+            <div className="p-4 border-b border-beige/40 flex items-center justify-between bg-cream/40">
               <div className="flex items-center gap-2.5">
                 <div className="relative w-9 h-9 shrink-0 rounded-full overflow-hidden border border-gold/40 shadow-xs">
                   <Image
@@ -415,69 +442,178 @@ export default function Header({
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-5 space-y-4">
+            {/* Drawer Body */}
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+              {/* Primary Navigation Links */}
               <div className="space-y-1">
-                {navLinks.map((link) => (
-                  <div key={link.label}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block py-2.5 px-3 text-sm font-medium tracking-wider uppercase transition-colors text-espresso hover:bg-cream/40"
-                    >
-                      {link.label}
-                    </Link>
-                    {link.items && (
-                      <div className="pl-4 py-1 space-y-1 bg-cream/20 border-l border-gold/40 my-1">
-                        {link.items.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            href={sub.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="block py-1.5 px-3 text-xs text-charcoal/80 hover:text-gold"
-                          >
-                            {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+                <Link
+                  href="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2.5 px-3 text-xs font-semibold tracking-wider uppercase text-espresso hover:bg-cream/40 transition-colors"
+                >
+                  Home
+                </Link>
 
-              <div className="pt-4 border-t border-beige/40 space-y-2">
+                {/* Expandable Shop All Collections */}
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setMobileShopExpanded(!mobileShopExpanded)}
+                    className="w-full flex items-center justify-between py-2.5 px-3 text-xs font-semibold tracking-wider uppercase text-espresso hover:bg-cream/40 transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Sparkles className="w-3.5 h-3.5 text-gold" />
+                      Shop Collections
+                    </span>
+                    <ChevronDown
+                      className={`w-4 h-4 text-charcoal/60 transition-transform duration-200 ${
+                        mobileShopExpanded ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {mobileShopExpanded && (
+                    <div className="pl-4 py-1 space-y-1 bg-cream/30 border-l-2 border-gold/60 my-1 rounded-xs">
+                      <Link
+                        href="/shop"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block py-2 px-3 text-xs font-medium text-chocolate hover:text-gold"
+                      >
+                        All Collections (Full Catalogue)
+                      </Link>
+                      <Link
+                        href="/shop/sarees"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block py-2 px-3 text-xs text-charcoal/80 hover:text-gold"
+                      >
+                        Sarees (Banarasi, Kanjeevaram, Organza)
+                      </Link>
+                      <Link
+                        href="/shop/bridal"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block py-2 px-3 text-xs text-charcoal/80 hover:text-gold flex items-center justify-between"
+                      >
+                        <span>Bridal Collection & Lehengas</span>
+                        <span className="text-[9px] bg-gold/20 text-chocolate px-1.5 py-0.2 font-bold uppercase">
+                          Bridal
+                        </span>
+                      </Link>
+                      <Link
+                        href="/shop/suits"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block py-2 px-3 text-xs text-charcoal/80 hover:text-gold"
+                      >
+                        Suits, Anarkalis & Shararas
+                      </Link>
+                      <Link
+                        href="/shop/kurtis"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block py-2 px-3 text-xs text-charcoal/80 hover:text-gold"
+                      >
+                        Kurtis & Festive Tunics
+                      </Link>
+                      <Link
+                        href="/shop/dresses"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block py-2 px-3 text-xs text-charcoal/80 hover:text-gold"
+                      >
+                        Dresses & Fusion Gowns
+                      </Link>
+                      <Link
+                        href="/shop?filter=new"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block py-2 px-3 text-xs font-semibold text-gold hover:text-espresso"
+                      >
+                        ✦ New Arrivals
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                <Link
+                  href="/about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2.5 px-3 text-xs font-semibold tracking-wider uppercase text-espresso hover:bg-cream/40 transition-colors"
+                >
+                  About Us
+                </Link>
+
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2.5 px-3 text-xs font-semibold tracking-wider uppercase text-espresso hover:bg-cream/40 transition-colors"
+                >
+                  Our Hisar Store
+                </Link>
+
                 <Link
                   href="/track-order"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-xs uppercase tracking-wider text-charcoal/80 py-1.5 px-3 hover:text-gold"
+                  className="block py-2.5 px-3 text-xs font-semibold tracking-wider uppercase text-espresso hover:bg-cream/40 transition-colors"
                 >
-                  Track Your Order
+                  Track Order
+                </Link>
+              </div>
+
+              {/* Account & Policies */}
+              <div className="pt-3 border-t border-beige/40 space-y-1 text-xs">
+                <Link
+                  href="/account"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2 px-3 text-charcoal/80 hover:text-gold uppercase tracking-wider text-[11px]"
+                >
+                  My Account / Saved Orders
                 </Link>
                 <Link
                   href="/policies/shipping"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-xs uppercase tracking-wider text-charcoal/80 py-1.5 px-3 hover:text-gold"
+                  className="block py-2 px-3 text-charcoal/80 hover:text-gold uppercase tracking-wider text-[11px]"
                 >
-                  Shipping & Delivery Policy
+                  Shipping & Pan-India Delivery
+                </Link>
+                <Link
+                  href="/policies/returns"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block py-2 px-3 text-charcoal/80 hover:text-gold uppercase tracking-wider text-[11px]"
+                >
+                  Returns & Exchanges Policy
                 </Link>
                 <Link
                   href="/admin/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block text-xs uppercase tracking-wider text-gold py-1.5 px-3 font-semibold"
+                  className="block py-2 px-3 text-gold font-bold uppercase tracking-wider text-[11px]"
                 >
-                  Staff Admin Login
+                  Staff Admin Login ↗
                 </Link>
               </div>
 
-              <div className="pt-4 border-t border-beige/40 text-xs text-charcoal/70 space-y-2">
+              {/* Store Address & Contact */}
+              <div className="pt-3 border-t border-beige/40 text-xs text-charcoal/80 space-y-2 bg-cream/30 p-3 border border-beige/40">
                 <div className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-                  <span>Wholesale Cloth Market, Hisar, Haryana</span>
+                  <span className="text-[11px] leading-relaxed">
+                    SCF-31, Phase 1, Wholesale Cloth Market, Opposite Jindal Park, Tayal Bagh Colony, Hisar, Haryana 125001
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-gold shrink-0" />
-                  <span>+91 99960 88960</span>
+                  <a href="tel:+919996088960" className="text-[11px] font-semibold text-espresso">
+                    +91 99960 88960
+                  </a>
                 </div>
               </div>
+            </div>
+
+            {/* Quick WhatsApp Assistance at bottom of drawer */}
+            <div className="p-4 border-t border-beige/40 bg-white">
+              <a
+                href="https://wa.me/919996088960?text=Namaste!%20I%20would%20like%20to%20enquire%20about%20bridal%20and%20saree%20collections."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-4 bg-[#25D366] text-white text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 shadow-xs hover:bg-[#20ba59] transition-colors"
+              >
+                <span>WhatsApp Studio Assistance</span>
+              </a>
             </div>
           </aside>
         </div>

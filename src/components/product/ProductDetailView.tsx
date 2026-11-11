@@ -35,6 +35,7 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
   const { isInWishlist, toggleWishlist } = useWishlist();
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
     product.variants?.[0]?.id || null
   );
@@ -124,10 +125,28 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
     setReviewSubmitting(false);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0 && activeImageIndex < images.length - 1) {
+        setActiveImageIndex((prev) => prev + 1);
+      } else if (diff < 0 && activeImageIndex > 0) {
+        setActiveImageIndex((prev) => prev - 1);
+      }
+    }
+    setTouchStartX(null);
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-24 lg:pb-12">
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="text-xs text-charcoal/60 mb-8 flex items-center gap-2">
+      <nav aria-label="Breadcrumb" className="text-xs text-charcoal/60 mb-6 sm:mb-8 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
         <Link href="/" className="hover:text-gold transition-colors">
           Home
         </Link>
@@ -150,15 +169,15 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
       {/* Main Product Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
         {/* Left: Interactive Media Gallery */}
-        <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4 sticky top-24">
+        <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-3 sm:gap-4 sticky top-24">
           {/* Thumbnails list */}
           {images.length > 1 && (
-            <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto max-h-[580px] shrink-0 pb-2 sm:pb-0">
+            <div className="flex sm:flex-col gap-2.5 sm:gap-3 overflow-x-auto sm:overflow-y-auto max-h-[580px] shrink-0 pb-1 sm:pb-0">
               {images.map((img: any, idx: number) => (
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
-                  className={`relative w-16 h-20 sm:w-20 sm:h-24 shrink-0 border-2 overflow-hidden bg-cream/30 transition-all ${
+                  className={`relative w-14 h-18 sm:w-20 sm:h-24 shrink-0 border-2 overflow-hidden bg-cream/30 transition-all ${
                     activeImageIndex === idx ? "border-gold shadow-sm scale-102" : "border-beige/40 opacity-70 hover:opacity-100"
                   }`}
                   aria-label={`View image ${idx + 1}`}
@@ -169,8 +188,12 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
             </div>
           )}
 
-          {/* Large Main Photograph */}
-          <div className="relative flex-1 aspect-3/4 max-h-[640px] bg-white border border-beige/40 shadow-md overflow-hidden group">
+          {/* Large Main Photograph with Touch Swipe */}
+          <div
+            className="relative flex-1 aspect-3/4 max-h-[640px] bg-white border border-beige/40 shadow-md overflow-hidden group touch-pan-y"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <Image
               src={currentImage}
               alt={product.title}
@@ -181,18 +204,39 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
             />
 
             {/* Badges */}
-            <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5">
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 flex flex-col gap-1.5">
               {product.isNewArrival && (
-                <span className="bg-espresso text-ivory text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 shadow-sm">
+                <span className="bg-espresso text-ivory text-[9px] sm:text-[10px] uppercase tracking-wider sm:tracking-widest font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 shadow-sm">
                   New Arrival
                 </span>
               )}
               {product.isBestseller && (
-                <span className="bg-gold text-white text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 shadow-sm">
+                <span className="bg-gold text-white text-[9px] sm:text-[10px] uppercase tracking-wider sm:tracking-widest font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 shadow-sm">
                   Bestseller
                 </span>
               )}
             </div>
+
+            {/* Mobile Image Counter Badge */}
+            {images.length > 1 && (
+              <div className="sm:hidden absolute bottom-3 right-3 z-10 bg-espresso/80 text-ivory text-[10px] font-mono px-2 py-0.5 rounded-full backdrop-blur-xs">
+                {activeImageIndex + 1} / {images.length}
+              </div>
+            )}
+
+            {/* Mobile Pagination Dots */}
+            {images.length > 1 && (
+              <div className="sm:hidden absolute bottom-3 inset-x-0 z-10 flex justify-center gap-1.5">
+                {images.map((_: any, idx: number) => (
+                  <span
+                    key={idx}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      activeImageIndex === idx ? "w-4 bg-gold shadow-xs" : "w-1.5 bg-white/70"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -737,6 +781,35 @@ export default function ProductDetailView({ product, relatedProducts }: ProductD
           </div>
         </div>
       )}
+
+      {/* Mobile Sticky Bottom Purchase Bar */}
+      <div className="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-beige/60 p-3 lg:hidden flex items-center justify-between gap-3 shadow-2xl pb-[max(env(safe-area-inset-bottom),12px)]">
+        <div className="flex flex-col">
+          <span className="text-[9px] uppercase tracking-wider text-charcoal/60 font-semibold">Price</span>
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-base font-bold text-espresso">₹{priceNum.toLocaleString("en-IN")}</span>
+            {hasDiscount && (
+              <span className="text-[10px] text-charcoal/40 line-through">₹{mrpNum.toLocaleString("en-IN")}</span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => handleAddToCart(false)}
+            className="bg-chocolate hover:bg-espresso text-ivory text-[11px] uppercase tracking-wider font-semibold py-2.5 px-3.5 shadow-xs active:scale-95 transition-all flex items-center gap-1.5"
+          >
+            {addedNotice ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <ShoppingBag className="w-3.5 h-3.5 text-gold" />}
+            <span>{addedNotice ? "Added" : "Add to Bag"}</span>
+          </button>
+          <button
+            onClick={() => handleAddToCart(true)}
+            className="bg-gold hover:bg-champagne text-espresso text-[11px] uppercase tracking-wider font-semibold py-2.5 px-3.5 shadow-xs active:scale-95 transition-all"
+          >
+            Buy Now
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
